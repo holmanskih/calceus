@@ -1,0 +1,14 @@
+{
+    "files": [
+        {
+            "name": "dist",
+            "type": "dir",
+            "children": [
+                {
+                    "name": "index.html",
+                    "type": "file"
+                }
+            ]
+        }
+    ]
+}

@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { Template } from './template.js'
 
 export const dirPath = 'dirPath'
 export const modules = 'modules'
@@ -29,7 +30,15 @@ export class Builder {
     }
 
     bootstrap() {
-        console.log(this);
+        this._createBaseDir()
+        
+
+        const tmpl = new Template()
+        tmpl.parseFromConfig()
+        tmpl.getFiles()
+    }
+
+    _createBaseDir() {
         let path = this._dirPath
         if(path) {
             if(fs.existsSync(path)) {
@@ -39,8 +48,8 @@ export class Builder {
     
             fs.mkdirSync(path, {recursive: true})
             console.log(`We created the new project with ${path} name`);
-            return
+        } else {
+            console.log(`You entered empy path name: ${path}.`);
         }
-        console.log(`You entered empy path name: ${path}.`);
     }
 }

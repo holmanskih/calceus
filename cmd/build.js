@@ -20,7 +20,7 @@ const modulesOptions = [
     },
 ]
 
-export function buildCmd() {
+export const buildCmd = () => {
     inquirer
         .prompt(modulesOptions)
         .then((answers) => {
