@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-const program = require('commander');
-const build = require('../cmd/build');
+import program from 'commander'
+import { buildCmd } from '../cmd/build.js';
 
 program
     .command('build')
     .alias('b')
     .description('Run build servey for module bundle and fetch')
-    .action(build);
+    .action(buildCmd);
 
 program.parse(process.argv);
