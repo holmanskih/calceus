@@ -32,9 +32,7 @@ export class Builder {
     bootstrap() {
         this._createBaseDir()
         
-
         const tmpl = new Template()
-        tmpl.parseFromConfig()
         tmpl.getFiles()
     }
 
@@ -43,7 +41,7 @@ export class Builder {
         if(path) {
             if(fs.existsSync(path)) {
                 path += "_copy"
-                console.log(`Such directory already exists. Creating the project...`);
+                console.log(`Such directory already exists`);
             } 
     
             fs.mkdirSync(path, {recursive: true})

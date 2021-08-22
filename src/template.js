@@ -1,7 +1,5 @@
 import fs from 'fs'
-import path from 'path'
-
-const configPath = "config/template.json"
+import {appConfig} from '../config/config.js'
 
 export class FileNode {
     constructor(name, type, children) {
@@ -16,23 +14,23 @@ export class Template {
         this._files = []
     }
 
-    parseFromConfig() {
-        if(fs.existsSync(configPath)) {
-            fs.readFile(configPath, (err, data) => {
-                if(err || data) {
-                    console.log(``);
+    _parseFromConfig() {
+        if(fs.existsSync(appConfig.templatePath)) {
+            fs.readFile(appConfig.templatePath, (err, data) => {
+                if(err || !data) {
+                    console.log(`Unexpected error while reading tempalate config: ${err}`);
                 }
-                const templateData = JSON.parse(data)
-                this._files = templateData
-                console.log(templateData);
+                return JSON.parse(data)
             })
-            return
         }
 
         console.log(`Template configuration file doesn\`t exists!`);
     }
 
     getFiles() {
-        return this._files
+        if(this._files) {
+            this.__files = this._parseFromConfig()
+            return this.__files
+        }
     }
 }

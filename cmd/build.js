@@ -1,16 +1,19 @@
 import inquirer from 'inquirer'
 import {Builder, dirPath, modules, projectName} from '../src/builder.js'
+import {appConfig} from '../config/config.js'
 
 const modulesOptions = [
     {
         type: 'input',
         name: dirPath,
         message: "Enter the new project path",
+        default: appConfig.mode == "debug" ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
     },
     {
         type: 'input',
         name: projectName,
         message: "Enter the new project name",
+        default: "example"
     },
     {
         type: 'rawlist',
