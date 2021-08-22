@@ -11,7 +11,9 @@ export class FileNode {
 
 export class Template {
     constructor() {
-        this._files = []
+        this._cfg = {
+            files: []
+        }
     }
 
     _parseFromConfig() {
@@ -20,17 +22,15 @@ export class Template {
                 if(err || !data) {
                     console.log(`Unexpected error while reading tempalate config: ${err}`);
                 }
-                return JSON.parse(data)
+                this._cfg = JSON.parse(data)
+                return this._cfg
             })
         }
 
         console.log(`Template configuration file doesn\`t exists!`);
     }
 
-    getFiles() {
-        if(this._files) {
-            this.__files = this._parseFromConfig()
-            return this.__files
-        }
+    getCfg() {
+        return this._cfg ? this._parseFromConfig() : this._cfg
     }
 }

@@ -30,10 +30,11 @@ export class Builder {
     }
 
     bootstrap() {
-        this._createBaseDir()
+        const boostrapConfig = this._createBaseDir()
+        console.log('files are', boostrapConfig.files[0]);
         
         const tmpl = new Template()
-        tmpl.getFiles()
+        tmpl.getCfg()
     }
 
     _createBaseDir() {
