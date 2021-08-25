@@ -1,15 +1,26 @@
 {
-    "root": "test",
+    "path": "./test_data",
     "files": [
         {
-            "path": "test/dist",
+            "path": "./test_data/test",
             "type": "dir",
             "children": [
                 {
-                    "path": "index.html",
-                    "type": "file"
+                    "path": "test/dist/index.html",
+                    "type": "file",
+                    "children": []
                 }
             ]
+        },
+        {
+            "path": "./test_data/libs",
+            "type": "dir",
+            "children": []
+        },
+        {
+            "path": "webpack.config.js",
+            "type": "file",
+            "children": []
         }
     ]
 }

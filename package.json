@@ -8,7 +8,8 @@
     "wce": "./dist/bin/index.js"
   },
   "scripts": {
-    "start": "tsc -w"
+    "start": "tsc -w",
+    "cli": "wce b"
   },
   "type": "module",
   "dependencies": {
