@@ -1,11 +1,12 @@
 {
+    "root": "test",
     "files": [
         {
-            "name": "dist",
+            "path": "test/dist",
             "type": "dir",
             "children": [
                 {
-                    "name": "index.html",
+                    "path": "index.html",
                     "type": "file"
                 }
             ]

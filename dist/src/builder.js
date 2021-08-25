@@ -24,12 +24,22 @@ export class Builder {
     getDirPath() {
         return this.dirPath;
     }
+    // todo: add try catch
     bootstrap() {
+        // create initial dir
+        this.createBaseDir();
+        // read template
         const template = new Template();
         const templateCfg = template.getCfg();
         if (templateCfg) {
-            console.log(templateCfg.files);
-            return;
+            const schema = templateCfg.files;
+            console.log(schema);
+            // create fs
+            for (let i = 0; i < schema.length; i++) {
+                const schemaNode = schema[i];
+                console.log('fsNode', schemaNode);
+                Template.createNode(schemaNode);
+            }
         }
         console.log('Unexpected template boostrat error. Template data is undefined!');
     }

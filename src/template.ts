@@ -1,5 +1,5 @@
 import fs from 'fs'
-import {appConfig} from '../config/config.js'
+import { appConfig } from '../config/config.js'
 
 enum FileNodeType {
     Dir = "dir",
@@ -7,15 +7,17 @@ enum FileNodeType {
 }
 
 export class FileNode {
-    private name: string;
-    private type: FileNodeType;
-    private children: Array<FileNode>;
+    public path: string;
+    public type: FileNodeType;
+    public children: Array<FileNode>;
 
-    constructor(name: string, type: FileNodeType, children: Array<FileNode>) {
-        this.name = name
-        this.type = type 
+    constructor(path: string, type: FileNodeType, children: Array<FileNode>) {
+        this.path = path
+        this.type = type
         this.children = children
     }
+
+
 }
 
 interface TemplateCfg {
@@ -31,10 +33,27 @@ export class Template {
         }
     }
 
+    public static createNode(fileNode: FileNode): void {
+        switch (fileNode.type) {
+            case FileNodeType.Dir:
+                console.log(`create new dir node`);
+                fs.mkdirSync(fileNode.path, { recursive: true })
+
+            case FileNodeType.File:
+                console.log(`create new file node`);
+                fs.writeFileSync(fileNode.path, 'hello')
+            default:
+                throw new Error('Unexpected file node type!')
+        }
+    }
+
     private parseFromConfig(): TemplateCfg | undefined {
-        if(fs.existsSync(appConfig.templatePath)) {
-            const data = fs.readFileSync(appConfig.templatePath, {encoding: 'utf-8', flag: 'r'})
-            this.cfg = JSON.parse(data.toString())
+        if (fs.existsSync(appConfig.templatePath)) {
+            const data = fs.readFileSync(appConfig.templatePath, { encoding: 'utf-8', flag: 'r' })
+            const rawJSON: TemplateCfg = JSON.parse(data.toString())
+            this.cfg = rawJSON
+            console.log('parseFromCfg', this.cfg);
+            
             return this.cfg
         }
 
