@@ -16,7 +16,8 @@
     "commander": "^8.1.0",
     "conf": "^10.0.2",
     "fs": "^0.0.1-security",
-    "inquirer": "^8.1.2"
+    "inquirer": "^8.1.2",
+    "quicktype": "^15.0.260"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
