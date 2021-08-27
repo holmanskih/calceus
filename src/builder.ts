@@ -1,5 +1,5 @@
-import { Bootstraper } from './bootstraper'
-import { Template } from './template'
+import { Template } from './template.js'
+import { Bootstraper } from './bootstraper.js'
 
 export const dirPath = 'dirPath'
 export const modules = 'modules'

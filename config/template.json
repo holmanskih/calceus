@@ -2,18 +2,18 @@
     "path": "./test_data",
     "files": [
         {
-            "path": "./test_data/test",
+            "path": "/test",
             "type": "dir",
             "children": [
                 {
-                    "path": "test/dist/index.html",
+                    "path": "/dist/index.html",
                     "type": "file",
                     "children": []
                 }
             ]
         },
         {
-            "path": "./test_data/libs",
+            "path": "/libs",
             "type": "dir",
             "children": []
         },
