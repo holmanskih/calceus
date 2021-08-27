@@ -1,4 +1,4 @@
-import { Template } from './template.js'
+import { Schema } from './schema.js'
 import { Bootstraper } from './bootstraper.js'
 
 export const dirPath = 'dirPath'
@@ -10,7 +10,7 @@ export class Builder {
     private modules: string;
     private projectName: string;
     private bootstraper: Bootstraper
-    private template: Template
+    private template: Schema
 
     // todo: change type !
     constructor(cliData: any) {
@@ -20,7 +20,7 @@ export class Builder {
         this.parse(cliData)
 
         // fetch schema from json
-        this.template = new Template()
+        this.template = new Schema()
         const schema = this.template.getCfg()
         if (!schema) {
             throw new Error('Project schema doesnt exists!')

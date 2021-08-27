@@ -1,4 +1,4 @@
-import { FileNode, FileNodeType, Schema } from "./template.js";
+import { FileNode, FileNodeType, SchemaModel } from "./schema.js";
 import path from 'path'
 import fs from 'fs'
 import shell from 'shelljs'
@@ -12,23 +12,27 @@ enum BootstraperCmd {
     CreateRootCopy,
 
     // ceateas  a new directory by schema path with absolute path
-    CreateRootAbs
+    CreateRootAbs,
+
+    // creates a new child directory with respect to parent schema node
+    CreateChild
 }
+
 export class Bootstraper {
-    private schema: Schema
+    private schema: SchemaModel
     private root: string
 
-    constructor(root: string, schema: Schema) {
+    constructor(root: string, schema: SchemaModel) {
         this.schema = schema
 
         try {
             this.root = fs.existsSync(root) ? 
-                Bootstraper.formPath(BootstraperCmd.CreateRootCopy, schema, root) : 
-                Bootstraper.formPath(BootstraperCmd.CreateRoot, schema, root)
+                this.formPath(BootstraperCmd.CreateRootCopy, root) : 
+                this.formPath(BootstraperCmd.CreateRoot, root)
         } catch (err) {
             console.log(`failed to resolve the schema root path configuration: ${err}`);
         } finally {
-            this.root = Bootstraper.formPath(BootstraperCmd.CreateRootAbs, schema, root)
+            this.root = this.formPath(BootstraperCmd.CreateRootAbs, root)
         }
     }
 
@@ -51,21 +55,40 @@ export class Bootstraper {
                 throw new Error(`Unexpected file node type: ${fileNode.type}`)
             }
         }
+
+        // walk to children by schema
+        // this.walkFileNode(fileNode, fileNode.path)
+    }
+
+    // run with a loop and traverse until the child exists if not
+    // clear the file prefix path and go on
+    private walkFileNode(fileNode: FileNode, root: string): void {
+        if(fileNode.children && fileNode.children.length > 0) {
+            fileNode.children.forEach((innerNode) => {
+                let updatedinnerNode = innerNode
+                updatedinnerNode.path = this.formPath(BootstraperCmd.CreateChild, root)
+                this.createFileNode(innerNode)
+            })
+        }
     }
 
     // helper method to form new path 
-    private static formPath(cmd: BootstraperCmd, schema: Schema, root: string): string {
+    private formPath(cmd: BootstraperCmd, root: string): string {
         switch(cmd) {
             case BootstraperCmd.CreateRoot: {
-                return path.join(schema.path, root)
+                return path.join(this.schema.path, root)
             }
 
             case BootstraperCmd.CreateRootCopy: {
-                return path.join(schema.path, root + "_copy")
+                return path.join(this.schema.path, root + "_copy")
             }
 
             case BootstraperCmd.CreateRootAbs: {
                 return path.join(process.cwd(), root)
+            }
+
+            case BootstraperCmd.CreateChild: {
+                return path.join(root)
             }
 
             default: {

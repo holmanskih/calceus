@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "tsc -w",
-    "cli": "wce b",
+    "calceus": "calceus b",
     "build": "npm install -g ./"
   },
   "type": "module",

@@ -6,9 +6,15 @@
             "type": "dir",
             "children": [
                 {
-                    "path": "/dist/index.html",
-                    "type": "file",
-                    "children": []
+                    "path": "/dist",
+                    "type": "dir",
+                    "children": [
+                        {
+                            "path": "index.html",
+                            "type": "file",
+                            "children": []
+                        }
+                    ]
                 }
             ]
         },

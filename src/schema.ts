@@ -12,37 +12,37 @@ export type FileNode = {
     children: Array<FileNode>;
 }
 
-export type Schema = {
+export type SchemaModel = {
     path: string
     files: Array<FileNode>
 }
 
-export class Template {
-    private cfg: Schema
+export class Schema {
+    private model: SchemaModel
 
     constructor() {
-        this.cfg = {
+        this.model = {
             path: '',
             files: []
         }
     }
 
-    private parseFromConfig(): Schema | undefined {
+    private parseFromConfig(): SchemaModel | undefined {
         if (fs.existsSync(appConfig.templatePath)) {
 
             const data = fs.readFileSync(appConfig.templatePath, { encoding: 'utf-8', flag: 'r' })
-            const rawJSON: Schema = JSON.parse(data.toString())
-            this.cfg = rawJSON
-            console.log('parseFromCfg', this.cfg);
+            const rawJSON: SchemaModel = JSON.parse(data.toString())
+            this.model = rawJSON
+            console.log('parseFromCfg', this.model);
 
-            return this.cfg
+            return this.model
         }
 
         console.log(`Template configuration file doesn\`t exists!`);
     }
 
-    getCfg(): Schema | undefined {
-        const cfg = this.cfg ? this.parseFromConfig() : this.cfg
+    getCfg(): SchemaModel | undefined {
+        const cfg = this.model ? this.parseFromConfig() : this.model
         return cfg
     }
 }
