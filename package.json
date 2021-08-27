@@ -5,11 +5,12 @@
   "license": "MIT",
   "private": false,
   "bin": {
-    "wce": "./dist/bin/index.js"
+    "calceus": "./dist/bin/index.js"
   },
   "scripts": {
     "start": "tsc -w",
-    "cli": "wce b"
+    "cli": "wce b",
+    "build": "npm install -g ./"
   },
   "type": "module",
   "dependencies": {

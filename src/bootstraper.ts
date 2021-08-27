@@ -15,7 +15,9 @@ export class Bootstraper {
             }
         } catch (err) {
             console.log(err);
-        } 
+        } finally {
+            this.rootPath = path.join(__dirname, rootPath)
+        }
 
         this.schema = schema
     }
