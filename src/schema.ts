@@ -25,9 +25,9 @@ export class Schema {
     }
 
     private parseFromConfig(): SchemaModel | undefined {
-        if (fs.existsSync(appConfig.templatePath)) {
+        if (fs.existsSync(appConfig.projectTemplatePath)) {
 
-            const data = fs.readFileSync(appConfig.templatePath, { encoding: 'utf-8', flag: 'r' })
+            const data = fs.readFileSync(appConfig.projectTemplatePath, { encoding: 'utf-8', flag: 'r' })
             const rawJSON: SchemaModel = JSON.parse(data.toString())
             this.model = rawJSON
             console.log('parseFromCfg', this.model);
