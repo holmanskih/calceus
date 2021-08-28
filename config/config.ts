@@ -1,4 +1,4 @@
 export const appConfig = {
-    templatePath: "config/template-only-child.json",
+    templatePath: "config/template.json",
     mode: "prod", // debug or prod
 }

@@ -1,49 +1,28 @@
 {
-    "path": "./test_data",
     "files": [
         {
-            "key": "test-dir",
-            "parentKey": null,
-            "path": "/test",
-            "type": "dir",
-            "children": [
-                {
-                    "key": "dist-dir",
-                    "parentKey": "test-dir",
-                    "path": "/dist",
-                    "type": "dir",
-                    "children": [
-                        {
-                            "key": "dist-index-html",
-                            "parentKey": "dist-dir",
-                            "path": "index.html",
-                            "type": "file",
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "key": "test-dir-webpack",
-                    "parentKey": "test-dir",
-                    "path": "webpack.config.js",
-                    "type": "file",
-                    "children": []
-                }
-            ]
+            "path": "/webpack.config.js",
+            "type": "file"
         },
         {
-            "key": "libs",
-            "parentKey": "test-dir",
-            "path": "/libs",
-            "type": "dir",
-            "children": []
+            "path": "/dist/.gitkeep",
+            "type": "file"
         },
         {
-            "key": "root-webpack",
-            "parentKey": "test-dir",
-            "path": "webpack.config.js",
-            "type": "file",
-            "children": []
+            "path": "/public/index.html",
+            "type": "file"
+        },
+        {
+            "path": "/src/index.js",
+            "type": "file"
+        },
+        {
+            "path": "/.calceus/.gitkeep",
+            "type": "file"
+        },
+        {
+            "path": "/package.json",
+            "type": "file"
         }
     ]
 }
