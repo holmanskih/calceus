@@ -1,6 +1,7 @@
 import inquirer from 'inquirer'
 import {Builder, dirPath, modules, projectName} from '../src/builder.js'
 import {appConfig} from '../config/config.js'
+import shell from 'shelljs'
 
 const modulesOptions = [
     {
@@ -24,6 +25,10 @@ const modulesOptions = [
 ]
 
 export const buildCmd = () => {
+    // console.log('touch directory');
+    // shell.mkdir('-p', './test23/somethind/more')
+    // shell.touch('./test23/somethind/more/index.html')
+
     inquirer
         .prompt(modulesOptions)
         .then((answers) => {

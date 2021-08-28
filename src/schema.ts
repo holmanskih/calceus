@@ -9,11 +9,9 @@ export enum FileNodeType {
 export type FileNode = {
     path: string;
     type: FileNodeType;
-    children: Array<FileNode>;
 }
 
 export type SchemaModel = {
-    path: string
     files: Array<FileNode>
 }
 
@@ -22,7 +20,6 @@ export class Schema {
 
     constructor() {
         this.model = {
-            path: '',
             files: []
         }
     }
