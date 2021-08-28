@@ -24,19 +24,7 @@ export class Bootstraper {
 
     constructor(root: string, schema: SchemaModel) {
         this.schema = schema
-
-
         this.root = root
-
-        // try {
-        //     this.root = fs.existsSync(root) ?
-        //         this.formPath(BootstraperCmd.CreateRootCopy, root) :
-        //         this.formPath(BootstraperCmd.CreateRoot, root)
-        // } catch (err) {
-        //     console.log(`failed to resolve the schema root path configuration: ${err}`);
-        // } finally {
-        //     this.root = this.formPath(BootstraperCmd.CreateRootAbs, root)
-        // }
     }
 
     private createFileNode(fileNode: FileNode): void {
@@ -45,10 +33,6 @@ export class Bootstraper {
         switch (fileNode.type) {
             case FileNodeType.Dir: {
                 Bootstraper.createDirRecursively(nodePath)
-                // Bootstraper.navigateToDir(nodePath)
-                // fileNode.children.forEach((node) => {
-                //     this.createFileNode(node)
-                // })
                 break
             }
 
@@ -62,45 +46,7 @@ export class Bootstraper {
                 throw new Error(`Unexpected file node type: ${fileNode.type}`)
             }
         }
-
-        // walk to children by schema
-        // this.walkFileNode(fileNode, fileNode.path)
     }
-
-    // // run with a loop and traverse until the child exists if not
-    // // clear the file prefix path and go on
-    // private walkFileNode(fileNode: FileNode, root: string): void {
-    //     if (fileNode.children && fileNode.children.length > 0) {
-    //         fileNode.children.forEach((innerNode) => {
-    //             let updatedinnerNode = innerNode
-    //             updatedinnerNode.path = this.formPath(BootstraperCmd.CreateChild, root)
-    //             this.createFileNode(innerNode)
-    //         })
-    //     }
-    // }
-
-    // private formRelativePathByKey(currNode: FileNode): string {
-    //     if(currNode.parentKey != null) {
-    //         const currPath = currNode.path
-    //         const parentNode = this.searchTagByParentKey(currNode, currNode.parentKey)
-    //         const newPath = path.join()
-    //     }
-    // }
-
-    // private searchTagByParentKey = (element: FileNode, searchKey: string): FileNode | null => {
-    //     if (element.parentKey == searchKey) {
-    //         return element;
-    //     }
-    //     if (element.children != null) {
-    //         let i;
-    //         let result: FileNode | null = null;
-    //         for (i = 0; result == null && i < element.children.length; i++) {
-    //             result = this.searchTagByParentKey(element.children[i], searchKey);
-    //         }
-    //         return result;
-    //     }
-    //     return null;
-    // }
 
     // helper method to form new path 
     private formPath(cmd: BootstraperCmd, root: string): string {
