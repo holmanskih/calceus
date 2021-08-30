@@ -1,9 +1,11 @@
+import path from "path";
 import { getCalceusPath, getTemplateFilePath } from "../config/config.js";
 import { Utils } from "./utils.js";
 
 export type TemplateModel = {
     key: string,
     path: string,
+    name: string
     modules: Array<string>
 }
 
@@ -33,11 +35,10 @@ export class Template {
         if(template === undefined) {
             throw new Error(`template with key: ${key} was not found in schema`)
         }
-        console.log('moveToBootstrap', projectPath, key, template);
 
-        const tempplatePath = getTemplateFilePath(template.path)
-        const dirPath = Utils.formRootDirPathFromFile(projectPath, template.path)
-        
-        Utils.copyFile(tempplatePath, dirPath)
+        const templatePath = getTemplateFilePath(template.path)
+        const dirPath = Utils.formRootDirPathFromFile(projectPath, template.name)
+
+        Utils.copyFile(templatePath, dirPath)
     }
 }
