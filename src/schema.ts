@@ -1,8 +1,7 @@
 import fs from 'fs'
-import { appConfig } from '../config/config.js'
+import { IO } from './io.js'
 
 export enum FileNodeType {
-    Dir = "dir",
     File = "file",
     Template = "template",
 }
@@ -33,22 +32,8 @@ export class Schema {
         this.schemaPath = schemaPath
     }
 
-    private parseFromConfig(): SchemaModel | undefined {
-        if (fs.existsSync(this.schemaPath)) {
-
-            const data = fs.readFileSync(this.schemaPath, { encoding: 'utf-8', flag: 'r' })
-            const rawJSON: SchemaModel = JSON.parse(data.toString())
-            this.model = rawJSON
-            console.log('parseFromCfg', this.model);
-
-            return this.model
-        }
-
-        console.log(`Template configuration file doesn\`t exists!`);
-    }
-
-    getCfg(): SchemaModel | undefined {
-        const cfg = this.model ? this.parseFromConfig() : this.model
-        return cfg
+    public parseFromConfig(): SchemaModel {
+        console.log('reading the schema configuration...');
+        return IO.readJSONConfig<SchemaModel>(this.schemaPath)
     }
 }

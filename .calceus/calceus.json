@@ -1,7 +1,8 @@
 [
     {
         "key": "react",
-        "path": ".templates/webpack.react.config.js",
+        "path": "templates/webpack.react.config.js",
+        "name": "webpack.config.js",
         "modules": [
             "moduleA",
             "moduleB",
@@ -10,7 +11,8 @@
     },
     {
         "key": "vue",
-        "path": ".templates/webpack.vue.config.js",
+        "path": "templates/webpack.vue.config.js",
+        "name": "webpack.config.js",
         "modules": [
             "moduleD",
             "moduleG",

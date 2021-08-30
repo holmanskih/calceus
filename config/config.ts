@@ -6,7 +6,9 @@ export enum RunMode {
 }
 
 type AppConfig = {
+    // calceus
     calceusPath: string,
+    calceusConfigPath: string
 
     mode: RunMode,
 
@@ -15,15 +17,19 @@ type AppConfig = {
 
     // templates
     templatesPath: string,
-    templatesConfigPath: string
-
 }
 
 export const appConfig: AppConfig = {
+    // calceus
     calceusPath: ".calceus",
+    calceusConfigPath: "calceus.json",
+
+    // schema
     schemaPath: "schema/schema.json",
+
+    // templates
     templatesPath: "templates",
-    templatesConfigPath: "calceus.json",
+
     mode: RunMode.Prod, // debug or prod
 }
 
@@ -39,4 +45,12 @@ export const getSchemaFilePath = (schemaFilePath: string): string => {
 
 export const getTemplatesPath = (): string => {
     return path.join(appConfig.calceusPath, appConfig.templatesPath)
+}
+
+export const getTemplateFilePath = (templateFilePath: string): string => {
+    return path.join(appConfig.calceusPath, templateFilePath)
+}
+
+export const getCalceusPath = (): string => {
+    return path.join(appConfig.calceusPath, appConfig.calceusConfigPath)
 }
