@@ -1,0 +1,20 @@
+[
+    {
+        "key": "react",
+        "path": ".templates/webpack.react.config.js",
+        "modules": [
+            "moduleA",
+            "moduleB",
+            "moduleC"
+        ]
+    },
+    {
+        "key": "vue",
+        "path": ".templates/webpack.vue.config.js",
+        "modules": [
+            "moduleD",
+            "moduleG",
+            "moduleE"
+        ]
+    }
+]

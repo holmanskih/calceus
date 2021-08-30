@@ -1,7 +1,8 @@
 import inquirer from 'inquirer'
-import {Builder, dirPath, modules, projectName} from '../src/builder.js'
+import {App, dirPath, modules, projectName} from '../src/app.js'
 import {appConfig, RunMode} from '../config/config.js'
 import shell from 'shelljs'
+import { Bootstraper } from '../src/bootstraper.js'
 
 const modulesOptions = [
     {
@@ -25,10 +26,12 @@ const modulesOptions = [
 ]
 
 export const buildCmd = () => {
+    shell.cp('-f', "calceus/webpack.config.js", "src/")
+
     inquirer
         .prompt(modulesOptions)
         .then((answers) => {
-            let builder = new Builder(answers)
+            let builder = new App(answers)
             builder.bootstrap()
         })
         .catch((error) => {

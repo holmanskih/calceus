@@ -21,15 +21,20 @@ type AppConfig = {
 
 export const appConfig: AppConfig = {
     calceusPath: "/Users/holmanskih/Personal/calceus/.calceus",
-    schemaPath: "schema/template.json",
+    schemaPath: "schema/schema.json",
     templatesPath: "templates",
-    templatesConfigPath: "./templates.js",
+    templatesConfigPath: "calceus.json",
     mode: RunMode.Prod, // debug or prod
 }
 
 // path utils
 export const getSchemaPath = (): string => {
     return path.join(appConfig.calceusPath, appConfig.schemaPath)
+}
+
+export const getSchemaFilePath = (schemaFilePath: string): string => {
+    return path.join(appConfig.calceusPath, 'schema', schemaFilePath)
+
 }
 
 export const getTemplatesPath = (): string => {

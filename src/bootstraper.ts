@@ -3,7 +3,7 @@ import path from 'path'
 import fs from 'fs'
 import shell from 'shelljs'
 import { Template } from "./template.js";
-import { appConfig } from "../config/config.js";
+import { appConfig, getSchemaFilePath } from "../config/config.js";
 
 enum BootstraperCmd {
     // creates new directory by schema configuration
@@ -60,8 +60,8 @@ export class Bootstraper {
             case FileNodeType.Template: {
                 console.log('adding template configuration...');
                 //todo: add template init logic
-                Bootstraper.createFile(nodePath)
-                shell.touch(nodePath)
+                // Bootstraper.createFile(nodePath)
+                // shell.touch(nodePath)
                 break
             }
 
@@ -136,14 +136,29 @@ export class Bootstraper {
         }
     }
 
-    private static copyFile(path: string, dest: string) {
-        fs.copyFile(path, dest, fs.constants.COPYFILE_FICLONE, (err: NodeJS.ErrnoException | null) => {
-            console.log(`failed to create new file from schema ${err}`);
-        })
+    public static copyFile(path: string, dest: string) {
+        shell.cp('-f', path, dest)
+
+        // fs.copyFile(path, dest, fs.constants.COPYFILE_FICLONE_FORCE, (err: NodeJS.ErrnoException | null) => {
+        //     console.log(`failed to create new file from schema ${err}`);
+        // })
+    }
+
+    private createFileNodesBySchema = () => {
+        const files = this.schema.files
+
+        for (let i = 0; i < files.length; i++) {
+            const fileNode = files[i]
+            const nodePath = path.join(this.root, fileNode.path)
+
+            const schemaFilePath = getSchemaFilePath(fileNode.path)
+            Bootstraper.copyFile(schemaFilePath, nodePath)
+        }
     }
 
     public bootstrap() {
         this.createBaseDirNode()
-        this.createFileNodes()
+        // this.createFileNodes()
+        this.createFileNodesBySchema()
     }
 }

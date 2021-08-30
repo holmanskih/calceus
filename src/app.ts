@@ -7,7 +7,7 @@ export const dirPath = 'dirPath'
 export const modules = 'modules'
 export const projectName = 'projectName'
 
-export class Builder {
+export class App {
     private dirPath: string;
     private modules: string;
     private projectName: string;
