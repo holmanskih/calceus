@@ -1,6 +1,6 @@
 import inquirer from 'inquirer'
 import {Builder, dirPath, modules, projectName} from '../src/builder.js'
-import {appConfig} from '../config/config.js'
+import {appConfig, RunMode} from '../config/config.js'
 import shell from 'shelljs'
 
 const modulesOptions = [
@@ -8,7 +8,7 @@ const modulesOptions = [
         type: 'input',
         name: dirPath,
         message: "Enter the new project path",
-        default: appConfig.mode == "debug" ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
+        default: appConfig.mode == RunMode.Debug ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
     },
     {
         type: 'input',
@@ -25,10 +25,6 @@ const modulesOptions = [
 ]
 
 export const buildCmd = () => {
-    // console.log('touch directory');
-    // shell.mkdir('-p', './test23/somethind/more')
-    // shell.touch('./test23/somethind/more/index.html')
-
     inquirer
         .prompt(modulesOptions)
         .then((answers) => {

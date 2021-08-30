@@ -1,4 +1,4 @@
-import { appConfig } from "../config/config";
+import { appConfig } from "../config/config.js";
 import shell from 'shelljs'
 
 export class Template {
@@ -12,11 +12,6 @@ export class Template {
     }
 
     public bootstrap(modules: Array<string>): void {
-        this.setDataToTemplate(modules)
     }
 
-    public setDataToTemplate(modules: Array<string>): void {
-        // read data from template
-        // todo process ejs/pug 
-    }
 }

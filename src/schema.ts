@@ -3,7 +3,8 @@ import { appConfig } from '../config/config.js'
 
 export enum FileNodeType {
     Dir = "dir",
-    File = "file"
+    File = "file",
+    Template = "template",
 }
 
 export type FileNode = {

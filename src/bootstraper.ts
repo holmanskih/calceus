@@ -1,7 +1,9 @@
-import { FileNode, FileNodeType, SchemaModel } from "./schema.js";
+import { FileNode, FileNodeType, SchemaModel as Schema } from "./schema.js";
 import path from 'path'
 import fs from 'fs'
 import shell from 'shelljs'
+import { Template } from "./template.js";
+import { appConfig } from "../config/config.js";
 
 enum BootstraperCmd {
     // creates new directory by schema configuration
@@ -19,12 +21,25 @@ enum BootstraperCmd {
 }
 
 export class Bootstraper {
-    private schema: SchemaModel
+    private schema: Schema
+    private template: Template
     private root: string
 
-    constructor(root: string, schema: SchemaModel) {
+    constructor(root: string, schema: Schema) {
         this.schema = schema
         this.root = root
+        this.template = new Template()
+
+
+        // check if .calceus directory exists
+        const isExists = this.isExists()
+        if(!isExists) {
+            throw new Error('.calceus path is not correct, such directory doesnt exist')
+        }
+    }
+
+    private isExists(): boolean {
+        return fs.existsSync(appConfig.calceusPath)
     }
 
     private createFileNode(fileNode: FileNode): void {
@@ -99,11 +114,6 @@ export class Bootstraper {
         shell.touch(pathName)
     }
 
-    // private static navigateToDir(pathName: string): void {
-    //     console.log(`navigate to path: ${pathName}...`);
-    //     shell.cd(pathName)
-    // }
-
     private createBaseDirNode(): void {
         console.log('root path is', this.root);
 
@@ -116,6 +126,12 @@ export class Bootstraper {
         for (let i = 0; i < files.length; i++) {
             this.createFileNode(files[i])
         }
+    }
+
+    private static copyFile(path: string, dest: string) {
+        fs.copyFile(path, dest, fs.constants.COPYFILE_FICLONE, (err: NodeJS.ErrnoException | null) => {
+            console.log(`failed to create new file from schema ${err}`);
+        })
     }
 
     public bootstrap() {

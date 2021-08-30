@@ -1,15 +1,20 @@
-enum RunMode {
+export enum RunMode {
     Debug,
     Prod
 }
 
 type AppConfig = {
+    calceusPath: string,
     projectTemplatePath: string,
     mode: RunMode,
-    templatesPath: string
+    templatesPath: string,
+    templatesConfigPath: string
 }
+
 export const appConfig: AppConfig = {
-    projectTemplatePath: "config/template.json",
+    calceusPath: "/Users/holmanskih/Personal/calceus/.calceus",
+    projectTemplatePath: "schema/template.js",
+    templatesPath: "templates",
+    templatesConfigPath: "./templates.js",
     mode: RunMode.Prod, // debug or prod
-    templatesPath: "./calceus/template"
 }

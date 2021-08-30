@@ -1,5 +1,6 @@
 import { Schema } from './schema.js'
 import { Bootstraper } from './bootstraper.js'
+import { Template } from './template.js'
 
 export const dirPath = 'dirPath'
 export const modules = 'modules'
@@ -26,6 +27,7 @@ export class Builder {
             throw new Error('Project schema doesnt exists!')
         }
 
+        // create template
         // create bootstraper from schema
         this.bootstraper = new Bootstraper(this.dirPath, schema)
     }
