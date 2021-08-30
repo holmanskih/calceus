@@ -1,25 +1,8 @@
-import { FileNode, FileNodeType, SchemaModel as Schema } from "./schema.js";
-import path from 'path'
+import { FileNodeType, SchemaModel as Schema } from "./schema.js";
 import fs from 'fs'
-import shell from 'shelljs'
 import { Template } from "./template.js";
 import { appConfig, getSchemaFilePath } from "../config/config.js";
-import { Utils } from "./utils.js";
-
-enum BootstraperCmd {
-    // creates new directory by schema configuration
-    CreateRoot,
-
-    // create a copy of new directory by schema if such directory 
-    // already exists
-    CreateRootCopy,
-
-    // ceateas  a new directory by schema path with absolute path
-    CreateRootAbs,
-
-    // creates a new child directory with respect to parent schema node
-    CreateChild
-}
+import { IO } from "./io.js";
 
 export class Bootstraper {
     private schema: Schema
@@ -45,9 +28,7 @@ export class Bootstraper {
     }
 
     private createBaseDirNode(): void {
-        console.log('root path is', this.projectPath);
-
-        Utils.createDirRec(this.projectPath)
+        IO.createDirRec(this.projectPath)
     }
 
     private createFileNodesBySchema = () => {
@@ -58,16 +39,16 @@ export class Bootstraper {
 
             switch (fileNode.type) {
                 case FileNodeType.File: {
-                    const dirPath = Utils.formRootDirPathFromFile(this.projectPath, fileNode.path)
-                    Utils.createDirRec(dirPath)
+                    const dirPath = IO.formRootDirPathFromFile(this.projectPath, fileNode.path)
+                    IO.createDirRec(dirPath)
 
                     const schemaFilePath = getSchemaFilePath(fileNode.path)
-                    Utils.copyFile(schemaFilePath, dirPath)
+                    IO.copyFile(schemaFilePath, dirPath)
                     break
                 }
 
                 case FileNodeType.Template: {
-
+                    this.template.moveToBootstrap(this.projectPath, this.configurationKey)
                     break
                 }
 
@@ -80,6 +61,5 @@ export class Bootstraper {
     public bootstrap() {
         this.createBaseDirNode()
         this.createFileNodesBySchema()
-        this.template.moveToBootstrap(this.projectPath, this.configurationKey)
     }
 }

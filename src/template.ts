@@ -1,6 +1,6 @@
-import path from "path";
 import { getCalceusPath, getTemplateFilePath } from "../config/config.js";
-import { Utils } from "./utils.js";
+import { IO } from "./io.js";
+import path from 'path'
 
 export type TemplateModel = {
     key: string,
@@ -22,7 +22,7 @@ export class Template {
         this.templatePath = calceusConfig
 
         console.log('reading the template configuration...');
-        this.jsonCfg = Utils.readJSONConfig<Array<TemplateModel>>(this.templatePath)
+        this.jsonCfg = IO.readJSONConfig<Array<TemplateModel>>(this.templatePath)
     }
 
     private getTemplateByKey = (key: string): TemplateModel => {
@@ -37,8 +37,8 @@ export class Template {
         }
 
         const templatePath = getTemplateFilePath(template.path)
-        const dirPath = Utils.formRootDirPathFromFile(projectPath, template.name)
-
-        Utils.copyFile(templatePath, dirPath)
+        const dirPath = IO.formRootDirPathFromFile(projectPath, template.name)
+        
+        IO.copyFile(templatePath, path.join(dirPath, template.name))
     }
 }

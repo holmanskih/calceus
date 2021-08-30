@@ -1,29 +1,29 @@
 import inquirer from 'inquirer'
 import {App} from '../src/app.js'
 import {appConfig, RunMode} from '../config/config.js'
-import shell from 'shelljs'
-import { Bootstraper } from '../src/bootstraper.js'
 
-export const dirPath = 'dirPath'
-export const modules = 'modules'
-export const projectName = 'projectName'
+export enum CliOpt {
+    DirPath = "dirPath",
+    Modules = "modules",
+    ProjectName = "projectName"
+}
 
 const modulesOptions = [
     {
         type: 'input',
-        name: dirPath,
+        name: CliOpt.DirPath,
         message: "Enter the new project path",
         default: appConfig.mode == RunMode.Debug ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
     },
     {
         type: 'input',
-        name: projectName,
+        name: CliOpt.ProjectName,
         message: "Enter the new project name",
         default: "example"
     },
     {
         type: 'rawlist',
-        name: modules,
+        name: CliOpt.Modules,
         message: 'Choose project architecture to boostrap new project',
         choices: ['react', 'vue'],
     },

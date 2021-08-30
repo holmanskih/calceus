@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import shell from 'shelljs'
 
-export class Utils {
+export class IO {
     public static readJSONConfig<T>(path: string): T {
         if (fs.existsSync(path)) {
 
@@ -15,7 +15,7 @@ export class Utils {
     }
 
     public static createDirRec(path: string): void {
-        console.log(`create new dir: ${path}...`);
+        // console.log(`create new dir: ${path}...`);
         shell.mkdir('-p', path)
     }
 
@@ -30,9 +30,16 @@ export class Utils {
         const pathData = nodePath.split("/")
         const fileName = pathData[pathData.length - 1]
         const dirPath = nodePath.substring(0, nodePath.length - fileName.length - 1)
-
-        console.log('rootPath', root, 'filePath', filePath, 'dirPath', dirPath);
-        
         return dirPath
+    }
+
+    // optional
+    public static swapFileName(filePath: string, fileName: string): string {
+        const pathData = filePath.split("/")
+        const oldFileName = pathData[pathData.length - 1]
+        const rawPath = filePath.substring(0, filePath.length - oldFileName.length - 1)
+        const swappedPath = path.join(rawPath, fileName)
+
+        return swappedPath
     }
 }

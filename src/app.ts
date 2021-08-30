@@ -1,8 +1,7 @@
 import { Schema } from './schema.js'
 import { Bootstraper } from './bootstraper.js'
-import { Template } from './template.js'
-import { appConfig, getSchemaPath } from '../config/config.js'
-import { dirPath, modules, projectName } from '../cmd/build.js';
+import { getSchemaPath } from '../config/config.js'
+import { CliOpt } from '../cmd/build.js';
 
 export class App {
     private dirPath: string;
@@ -33,10 +32,9 @@ export class App {
 
     // todo: change type !
     private parse(cliData: any) {
-        this.dirPath = cliData[dirPath]
-        this.modules = cliData[modules]
-        this.projectName = cliData[projectName]
-        console.log(this);
+        this.dirPath = cliData[CliOpt.DirPath]
+        this.modules = cliData[CliOpt.Modules]
+        this.projectName = cliData[CliOpt.ProjectName]
     }
 
     getModules() {

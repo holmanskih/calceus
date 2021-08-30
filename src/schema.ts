@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { Utils } from './utils.js'
+import { IO } from './io.js'
 
 export enum FileNodeType {
     File = "file",
@@ -33,6 +33,7 @@ export class Schema {
     }
 
     public parseFromConfig(): SchemaModel {
-        return Utils.readJSONConfig<SchemaModel>(this.schemaPath)
+        console.log('reading the schema configuration...');
+        return IO.readJSONConfig<SchemaModel>(this.schemaPath)
     }
 }
