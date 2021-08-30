@@ -2,6 +2,7 @@ import { Schema } from './schema.js'
 import { Bootstraper } from './bootstraper.js'
 import { getSchemaPath } from '../config/config.js'
 import { CliOpt } from '../cmd/build.js';
+import { Yarn } from './yarn.js';
 
 export class App {
     private dirPath: string;

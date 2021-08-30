@@ -3,6 +3,7 @@ import fs from 'fs'
 import { Template } from "./template.js";
 import { appConfig, getSchemaFilePath } from "../config/config.js";
 import { IO } from "./io.js";
+import { Yarn } from "./yarn.js";
 
 export class Bootstraper {
     private schema: Schema
@@ -14,7 +15,7 @@ export class Bootstraper {
         this.schema = schema
         this.projectPath = projectPath
         this.configurationKey = configurationKey
-        this.template = new Template()
+        this.template = new Template(configurationKey)
 
         // check if .calceus directory exists
         const isExists = this.isExists()
@@ -48,7 +49,7 @@ export class Bootstraper {
                 }
 
                 case FileNodeType.Template: {
-                    this.template.moveToBootstrap(this.projectPath, this.configurationKey)
+                    this.template.moveToBootstrap(this.projectPath)
                     break
                 }
 
@@ -61,5 +62,8 @@ export class Bootstraper {
     public bootstrap() {
         this.createBaseDirNode()
         this.createFileNodesBySchema()
+
+        const pkgData = this.template.getTemplateByKey().modules
+        Yarn.start(this.projectPath, pkgData)
     }
 }
