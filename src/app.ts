@@ -2,10 +2,7 @@ import { Schema } from './schema.js'
 import { Bootstraper } from './bootstraper.js'
 import { Template } from './template.js'
 import { appConfig, getSchemaPath } from '../config/config.js'
-
-export const dirPath = 'dirPath'
-export const modules = 'modules'
-export const projectName = 'projectName'
+import { dirPath, modules, projectName } from '../cmd/build.js';
 
 export class App {
     private dirPath: string;
@@ -26,12 +23,12 @@ export class App {
             throw new Error('Project schema doesnt exists!')
         }
 
-        const schemaModel = schema.getCfg()
+        const schemaModel = schema.parseFromConfig()
         if(schemaModel == undefined) {
             throw new Error('Project schema model is undefined!')
         }
 
-        this.bootstraper = new Bootstraper(this.dirPath, schemaModel)
+        this.bootstraper = new Bootstraper(this.dirPath, schemaModel, this.modules)
     }
 
     // todo: change type !

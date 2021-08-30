@@ -1,8 +1,12 @@
 import inquirer from 'inquirer'
-import {App, dirPath, modules, projectName} from '../src/app.js'
+import {App} from '../src/app.js'
 import {appConfig, RunMode} from '../config/config.js'
 import shell from 'shelljs'
 import { Bootstraper } from '../src/bootstraper.js'
+
+export const dirPath = 'dirPath'
+export const modules = 'modules'
+export const projectName = 'projectName'
 
 const modulesOptions = [
     {
@@ -20,8 +24,8 @@ const modulesOptions = [
     {
         type: 'rawlist',
         name: modules,
-        message: 'Choose modules is needed to install',
-        choices: ['Webpack', 'SASS'],
+        message: 'Choose project architecture to boostrap new project',
+        choices: ['react', 'vue'],
     },
 ]
 
