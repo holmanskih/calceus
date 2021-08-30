@@ -4,5 +4,7 @@ node_modules/
 test_data
 .idea/
 /.idea/
-dist/
-/dist
+.dist/
+/.dist
+/example_project
+example_project/

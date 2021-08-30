@@ -1,0 +1,60 @@
+{
+    "files": [
+        {
+            "path": "webpack.config.js",
+            "type": "template"
+        },
+        {
+            "path": "package.json",
+            "type": "file"
+        },
+        {
+            "path": "README.md",
+            "type": "file"
+        },
+        {
+            "path": ".gitignore",
+            "type": "file"
+        },
+        {
+            "path": "/src/index.js",
+            "type": "file"
+        },
+        {
+            "path": "/src/index.html",
+            "type": "file"
+        },
+        {
+            "path": "/src/favicon.ico",
+            "type": "file"
+        },
+        {
+            "path": "/src/component.js",
+            "type": "file"
+        },
+        {
+            "path": "/src/styles/fonts.scss",
+            "type": "file"
+        },
+        {
+            "path": "/src/styles/index.scss",
+            "type": "file"
+        },
+        {
+            "path": "/src/styles/components/logo.scss",
+            "type": "file"
+        },
+        {
+            "path": "/src/styles/components/main.scss",
+            "type": "file"
+        },
+        {
+            "path": "/src/assets/fonts/Roboto-Regular.ttf",
+            "type": "file"
+        },
+        {
+            "path": "/src/assets/images/webpack.png",
+            "type": "file"
+        }
+    ]
+}

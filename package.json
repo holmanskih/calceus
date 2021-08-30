@@ -1,11 +1,11 @@
 {
-  "name": "y",
-  "version": "y",
+  "name": "calceus",
+  "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": false,
   "bin": {
-    "calceus": "./dist/bin/index.js"
+    "calceus": "./.dist/bin/index.js"
   },
   "scripts": {
     "start": "tsc -w",
@@ -14,6 +14,7 @@
   },
   "type": "module",
   "dependencies": {
+    "calceus": "./",
     "chalk": "^4.1.2",
     "commander": "^8.1.0",
     "conf": "^10.0.2",

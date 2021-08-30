@@ -1,13 +1,15 @@
 import inquirer from 'inquirer'
-import {Builder, dirPath, modules, projectName} from '../src/builder.js'
-import {appConfig} from '../config/config.js'
+import {App, dirPath, modules, projectName} from '../src/app.js'
+import {appConfig, RunMode} from '../config/config.js'
+import shell from 'shelljs'
+import { Bootstraper } from '../src/bootstraper.js'
 
 const modulesOptions = [
     {
         type: 'input',
         name: dirPath,
         message: "Enter the new project path",
-        default: appConfig.mode == "debug" ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
+        default: appConfig.mode == RunMode.Debug ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
     },
     {
         type: 'input',
@@ -27,7 +29,7 @@ export const buildCmd = () => {
     inquirer
         .prompt(modulesOptions)
         .then((answers) => {
-            let builder = new Builder(answers)
+            let builder = new App(answers)
             builder.bootstrap()
         })
         .catch((error) => {

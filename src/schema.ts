@@ -3,34 +3,40 @@ import { appConfig } from '../config/config.js'
 
 export enum FileNodeType {
     Dir = "dir",
-    File = "file"
+    File = "file",
+    Template = "template",
 }
 
 export type FileNode = {
     path: string;
     type: FileNodeType;
-    children: Array<FileNode>;
 }
 
 export type SchemaModel = {
-    path: string
     files: Array<FileNode>
 }
 
 export class Schema {
     private model: SchemaModel
+    private schemaPath: string
 
-    constructor() {
+    constructor(schemaPath: string) {
         this.model = {
-            path: '',
             files: []
         }
+
+        const exists = fs.existsSync(schemaPath)
+        if(!exists) {
+            throw new Error(`schema with path ${schemaPath} doesnt exists`)
+        }
+
+        this.schemaPath = schemaPath
     }
 
     private parseFromConfig(): SchemaModel | undefined {
-        if (fs.existsSync(appConfig.templatePath)) {
+        if (fs.existsSync(this.schemaPath)) {
 
-            const data = fs.readFileSync(appConfig.templatePath, { encoding: 'utf-8', flag: 'r' })
+            const data = fs.readFileSync(this.schemaPath, { encoding: 'utf-8', flag: 'r' })
             const rawJSON: SchemaModel = JSON.parse(data.toString())
             this.model = rawJSON
             console.log('parseFromCfg', this.model);

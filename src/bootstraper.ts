@@ -1,7 +1,9 @@
-import { FileNode, FileNodeType, SchemaModel } from "./schema.js";
+import { FileNode, FileNodeType, SchemaModel as Schema } from "./schema.js";
 import path from 'path'
 import fs from 'fs'
 import shell from 'shelljs'
+import { Template } from "./template.js";
+import { appConfig, getSchemaFilePath } from "../config/config.js";
 
 enum BootstraperCmd {
     // creates new directory by schema configuration
@@ -19,26 +21,30 @@ enum BootstraperCmd {
 }
 
 export class Bootstraper {
-    private schema: SchemaModel
+    private schema: Schema
+    private template: Template
     private root: string
 
-    constructor(root: string, schema: SchemaModel) {
+    constructor(root: string, schema: Schema) {
         this.schema = schema
+        this.root = root
+        this.template = new Template()
 
-        try {
-            this.root = fs.existsSync(root) ? 
-                this.formPath(BootstraperCmd.CreateRootCopy, root) : 
-                this.formPath(BootstraperCmd.CreateRoot, root)
-        } catch (err) {
-            console.log(`failed to resolve the schema root path configuration: ${err}`);
-        } finally {
-            this.root = this.formPath(BootstraperCmd.CreateRootAbs, root)
+
+        // check if .calceus directory exists
+        const isExists = this.isExists()
+        if(!isExists) {
+            throw new Error('.calceus path is not correct, such directory doesnt exist')
         }
+    }
+
+    private isExists(): boolean {
+        return fs.existsSync(appConfig.calceusPath)
     }
 
     private createFileNode(fileNode: FileNode): void {
         const nodePath = path.join(this.root, fileNode.path)
-        
+
         switch (fileNode.type) {
             case FileNodeType.Dir: {
                 Bootstraper.createDirRecursively(nodePath)
@@ -51,36 +57,29 @@ export class Bootstraper {
                 break
             }
 
+            case FileNodeType.Template: {
+                console.log('adding template configuration...');
+                //todo: add template init logic
+                // Bootstraper.createFile(nodePath)
+                // shell.touch(nodePath)
+                break
+            }
+
             default: {
                 throw new Error(`Unexpected file node type: ${fileNode.type}`)
             }
-        }
-
-        // walk to children by schema
-        // this.walkFileNode(fileNode, fileNode.path)
-    }
-
-    // run with a loop and traverse until the child exists if not
-    // clear the file prefix path and go on
-    private walkFileNode(fileNode: FileNode, root: string): void {
-        if(fileNode.children && fileNode.children.length > 0) {
-            fileNode.children.forEach((innerNode) => {
-                let updatedinnerNode = innerNode
-                updatedinnerNode.path = this.formPath(BootstraperCmd.CreateChild, root)
-                this.createFileNode(innerNode)
-            })
         }
     }
 
     // helper method to form new path 
     private formPath(cmd: BootstraperCmd, root: string): string {
-        switch(cmd) {
+        switch (cmd) {
             case BootstraperCmd.CreateRoot: {
-                return path.join(this.schema.path, root)
+                return root
             }
 
             case BootstraperCmd.CreateRootCopy: {
-                return path.join(this.schema.path, root + "_copy")
+                return path.join(this.root, "_copy")
             }
 
             case BootstraperCmd.CreateRootAbs: {
@@ -105,11 +104,27 @@ export class Bootstraper {
 
     // helper method to create a new file
     private static createFile(pathName: string): void {
+        // todo castom configuration!
+        const pathData = pathName.split("/")
+        const fileName = pathData[pathData.length - 1]
+        const dirPath = pathName.substring(0, pathName.length - fileName.length - 1)
+
+        Bootstraper.createDirRecursively(dirPath)
+
+        console.log(
+            'pathName', pathName,
+            'pathData', pathData,
+            'fileName', fileName,
+            'dirPath', dirPath
+        );
+
         console.log(`create new file: ${pathName}...`);
         shell.touch(pathName)
     }
 
     private createBaseDirNode(): void {
+        console.log('root path is', this.root);
+
         Bootstraper.createDirRecursively(this.root)
     }
 
@@ -121,8 +136,31 @@ export class Bootstraper {
         }
     }
 
+    public static copyFile(path: string, dest: string) {
+        console.log(`cp -f ${path} ${dest}...`);
+        shell.cp('-f', path, dest)
+    }
+
+    private createFileNodesBySchema = () => {
+        const files = this.schema.files
+
+        for (let i = 0; i < files.length; i++) {
+            const fileNode = files[i]
+            const nodePath = path.join(this.root, fileNode.path)
+
+            const pathData = nodePath.split("/")
+            const fileName = pathData[pathData.length - 1]
+            const dirPath = nodePath.substring(0, nodePath.length - fileName.length - 1)
+            Bootstraper.createDirRecursively(dirPath)
+            
+
+            const schemaFilePath = getSchemaFilePath(fileNode.path)
+            Bootstraper.copyFile(schemaFilePath, dirPath)
+        }
+    }
+
     public bootstrap() {
         this.createBaseDirNode()
-        this.createFileNodes()
+        this.createFileNodesBySchema()
     }
 }
