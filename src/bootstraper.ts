@@ -137,11 +137,8 @@ export class Bootstraper {
     }
 
     public static copyFile(path: string, dest: string) {
+        console.log(`cp -f ${path} ${dest}...`);
         shell.cp('-f', path, dest)
-
-        // fs.copyFile(path, dest, fs.constants.COPYFILE_FICLONE_FORCE, (err: NodeJS.ErrnoException | null) => {
-        //     console.log(`failed to create new file from schema ${err}`);
-        // })
     }
 
     private createFileNodesBySchema = () => {
@@ -151,14 +148,19 @@ export class Bootstraper {
             const fileNode = files[i]
             const nodePath = path.join(this.root, fileNode.path)
 
+            const pathData = nodePath.split("/")
+            const fileName = pathData[pathData.length - 1]
+            const dirPath = nodePath.substring(0, nodePath.length - fileName.length - 1)
+            Bootstraper.createDirRecursively(dirPath)
+            
+
             const schemaFilePath = getSchemaFilePath(fileNode.path)
-            Bootstraper.copyFile(schemaFilePath, nodePath)
+            Bootstraper.copyFile(schemaFilePath, dirPath)
         }
     }
 
     public bootstrap() {
         this.createBaseDirNode()
-        // this.createFileNodes()
         this.createFileNodesBySchema()
     }
 }

@@ -20,7 +20,7 @@ type AppConfig = {
 }
 
 export const appConfig: AppConfig = {
-    calceusPath: "/Users/holmanskih/Personal/calceus/.calceus",
+    calceusPath: ".calceus",
     schemaPath: "schema/schema.json",
     templatesPath: "templates",
     templatesConfigPath: "calceus.json",

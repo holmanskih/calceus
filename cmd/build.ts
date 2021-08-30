@@ -26,8 +26,6 @@ const modulesOptions = [
 ]
 
 export const buildCmd = () => {
-    shell.cp('-f', "calceus/webpack.config.js", "src/")
-
     inquirer
         .prompt(modulesOptions)
         .then((answers) => {
