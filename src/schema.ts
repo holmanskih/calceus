@@ -18,17 +18,25 @@ export type SchemaModel = {
 
 export class Schema {
     private model: SchemaModel
+    private schemaPath: string
 
-    constructor() {
+    constructor(schemaPath: string) {
         this.model = {
             files: []
         }
+
+        const exists = fs.existsSync(schemaPath)
+        if(!exists) {
+            throw new Error(`schema with path ${schemaPath} doesnt exists`)
+        }
+
+        this.schemaPath = schemaPath
     }
 
     private parseFromConfig(): SchemaModel | undefined {
-        if (fs.existsSync(appConfig.projectTemplatePath)) {
+        if (fs.existsSync(this.schemaPath)) {
 
-            const data = fs.readFileSync(appConfig.projectTemplatePath, { encoding: 'utf-8', flag: 'r' })
+            const data = fs.readFileSync(this.schemaPath, { encoding: 'utf-8', flag: 'r' })
             const rawJSON: SchemaModel = JSON.parse(data.toString())
             this.model = rawJSON
             console.log('parseFromCfg', this.model);

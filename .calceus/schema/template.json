@@ -1,10 +1,8 @@
-import {templates} from '../templates'
-
-const projectTemplate = {
-    files: [
+{
+    "files": [
         {
             "path": "webpack.config.js",
-            "type": "template",
+            "type": "template"
         },
         {
             "path": "package.json",

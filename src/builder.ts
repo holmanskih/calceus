@@ -1,6 +1,7 @@
 import { Schema } from './schema.js'
 import { Bootstraper } from './bootstraper.js'
 import { Template } from './template.js'
+import { appConfig, getSchemaPath } from '../config/config.js'
 
 export const dirPath = 'dirPath'
 export const modules = 'modules'
@@ -11,7 +12,6 @@ export class Builder {
     private modules: string;
     private projectName: string;
     private bootstraper: Bootstraper
-    private template: Schema
 
     // todo: change type !
     constructor(cliData: any) {
@@ -20,16 +20,18 @@ export class Builder {
         this.projectName = ''
         this.parse(cliData)
 
-        // fetch schema from json
-        this.template = new Schema()
-        const schema = this.template.getCfg()
+        const schemaPath = getSchemaPath()
+        const schema = new Schema(schemaPath)
         if (!schema) {
             throw new Error('Project schema doesnt exists!')
         }
 
-        // create template
-        // create bootstraper from schema
-        this.bootstraper = new Bootstraper(this.dirPath, schema)
+        const schemaModel = schema.getCfg()
+        if(schemaModel == undefined) {
+            throw new Error('Project schema model is undefined!')
+        }
+
+        this.bootstraper = new Bootstraper(this.dirPath, schemaModel)
     }
 
     // todo: change type !

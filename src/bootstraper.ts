@@ -57,6 +57,14 @@ export class Bootstraper {
                 break
             }
 
+            case FileNodeType.Template: {
+                console.log('adding template configuration...');
+                //todo: add template init logic
+                Bootstraper.createFile(nodePath)
+                shell.touch(nodePath)
+                break
+            }
+
             default: {
                 throw new Error(`Unexpected file node type: ${fileNode.type}`)
             }
