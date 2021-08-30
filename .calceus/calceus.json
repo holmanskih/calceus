@@ -4,9 +4,10 @@
         "path": "templates/webpack.react.config.js",
         "name": "webpack.config.js",
         "modules": [
-            "moduleA",
-            "moduleB",
-            "moduleC"
+            "path",
+            "webpack",
+            "webpack-merge",
+            "html-webpack-plugin"
         ]
     },
     {
@@ -14,9 +15,8 @@
         "path": "templates/webpack.vue.config.js",
         "name": "webpack.config.js",
         "modules": [
-            "moduleD",
-            "moduleG",
-            "moduleE"
+            "webpack",
+            "path"
         ]
     }
 ]

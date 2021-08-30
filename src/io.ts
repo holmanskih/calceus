@@ -13,6 +13,9 @@ export class IO {
 
         throw new Error(`config file: ${path} doesn\`t exists!`)
     }
+    public static navigate(path: string): void {
+        shell.cd(path)
+    }
 
     public static createDirRec(path: string): void {
         // console.log(`create new dir: ${path}...`);

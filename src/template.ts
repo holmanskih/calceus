@@ -10,10 +10,13 @@ export type TemplateModel = {
 }
 
 export class Template {
+    private name: string
     private templatePath: string;
     private jsonCfg: Array<TemplateModel>
 
-    constructor() {
+    constructor(name: string) {
+        this.name = name
+
         const calceusConfig = getCalceusPath()
 
         if(!calceusConfig) {
@@ -25,15 +28,15 @@ export class Template {
         this.jsonCfg = IO.readJSONConfig<Array<TemplateModel>>(this.templatePath)
     }
 
-    private getTemplateByKey = (key: string): TemplateModel => {
-        return this.jsonCfg.filter((cfgItem) => cfgItem.key === key)[0]
+    public getTemplateByKey = (): TemplateModel => {
+        return this.jsonCfg.filter((cfgItem) => cfgItem.key === this.name)[0]
     }
 
-    public moveToBootstrap = (projectPath: string, key: string) => {
+    public moveToBootstrap = (projectPath: string) => {
         
-        const template = this.getTemplateByKey(key)
+        const template = this.getTemplateByKey()
         if(template === undefined) {
-            throw new Error(`template with key: ${key} was not found in schema`)
+            throw new Error(`template with key: ${this.name} was not found in schema`)
         }
 
         const templatePath = getTemplateFilePath(template.path)
