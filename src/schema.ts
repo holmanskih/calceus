@@ -23,17 +23,14 @@ export class Schema {
         this.model = {
             files: []
         }
-
-        const exists = fs.existsSync(schemaPath)
-        if(!exists) {
-            throw new Error(`schema with path ${schemaPath} doesnt exists`)
-        }
-
         this.schemaPath = schemaPath
     }
 
     public parseFromConfig(): SchemaModel {
         console.log('reading the schema configuration...');
-        return IO.readJSONConfig<SchemaModel>(this.schemaPath)
+        const result = IO.readJSONConfig<SchemaModel>(this.schemaPath)
+        console.log('reading the schema configuration end...');
+
+        return result
     }
 }

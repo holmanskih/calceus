@@ -1,9 +1,9 @@
 import { FileNodeType, SchemaModel as Schema } from "./schema.js";
 import fs from 'fs'
 import { Template } from "./template.js";
-import { appConfig, getSchemaFilePath } from "../config/config.js";
 import { IO } from "./io.js";
 import { Yarn } from "./yarn.js";
+import { Modules } from "./modules.js";
 
 export class Bootstraper {
     private schema: Schema
@@ -18,15 +18,15 @@ export class Bootstraper {
         this.template = new Template(configurationKey)
 
         // check if .calceus directory exists
-        const isExists = this.isExists()
-        if (!isExists) {
-            throw new Error('.calceus path is not correct, such directory doesnt exist')
-        }
+        // const isExists = this.isExists()
+        // if (!isExists) {
+        //     throw new Error('.calceus path is not correct, such directory doesnt exist')
+        // }
     }
 
-    private isExists(): boolean {
-        return fs.existsSync(appConfig.calceusPath)
-    }
+    // private isExists(): boolean {
+    //     return fs.existsSync(appConfig.calceusPath)
+    // }
 
     private createBaseDirNode(): void {
         IO.createDirRec(this.projectPath)
@@ -43,7 +43,7 @@ export class Bootstraper {
                     const dirPath = IO.formRootDirPathFromFile(this.projectPath, fileNode.path)
                     IO.createDirRec(dirPath)
 
-                    const schemaFilePath = getSchemaFilePath(fileNode.path)
+                    const schemaFilePath = Modules.getSchemaFilePath(fileNode.path)
                     IO.copyFile(schemaFilePath, dirPath)
                     break
                 }
@@ -60,10 +60,10 @@ export class Bootstraper {
     }
 
     public bootstrap() {
-        this.createBaseDirNode()
-        this.createFileNodesBySchema()
+        // this.createBaseDirNode()
+        // this.createFileNodesBySchema()
 
-        const pkgData = this.template.getTemplateByKey().modules
-        Yarn.start(this.projectPath, pkgData)
+        // const pkgData = this.template.getTemplateByKey().modules
+        // Yarn.start(this.projectPath, pkgData)
     }
 }

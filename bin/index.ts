@@ -2,6 +2,7 @@
 import { buildCmd } from '../cmd/build.js';
 import { Command } from 'commander';
 import { configCommand } from '../cmd/config.js';
+import { validateConfig } from '../config/config.js';
 const program = new Command();
 
 program
@@ -17,3 +18,5 @@ program
     .action(configCommand);
 
 program.parse(process.argv);
+
+validateConfig()

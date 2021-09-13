@@ -1,6 +1,6 @@
 import inquirer from 'inquirer'
 import {App} from '../src/app.js'
-import {appConfig, RunMode} from '../config/config.js'
+import {cfg, RunMode} from '../config/config.js'
 
 export enum CliOpt {
     DirPath = "dirPath",
@@ -13,7 +13,7 @@ const modulesOptions = [
         type: 'input',
         name: CliOpt.DirPath,
         message: "Enter the new project path",
-        default: appConfig.mode == RunMode.Debug ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
+        default: cfg.mode === RunMode.Debug ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
     },
     {
         type: 'input',

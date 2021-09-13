@@ -4,6 +4,8 @@ import shell from 'shelljs'
 
 export class IO {
     public static readJSONConfig<T>(path: string): T {
+        console.log('read json by path', path);
+        
         if (fs.existsSync(path)) {
 
             const data = fs.readFileSync(path, { encoding: 'utf-8', flag: 'r' })

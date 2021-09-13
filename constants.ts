@@ -1,9 +1,36 @@
 import path from "path"
 import os from "os"
 
-const MODULES_PATH_NAME = ".calceus"
+// directory path
+export const MODULES_PATH_NAME = ".calceus"
+export const MODULES_CONFIG_FILE_PATH = "calceus.json"
 
+// templates
+export const MODULES_TEMPLATES_PATH = "templates"
+
+// schema
+export const MODULES_SCHEMA_PATH = "schema"
+export const MODULES_SCHEMA_CONFIG_FILE_PATH = "schema/schema.json"
+
+// modules
 export const getModulesPath = (): string => {
-    // todo: add system for both unix and windows platforms 
     return path.join(os.homedir(), MODULES_PATH_NAME)
+}
+
+export const getModulesConfigFilePath = (): string => {
+    return path.join(os.homedir(), MODULES_PATH_NAME, MODULES_CONFIG_FILE_PATH)
+}
+
+// shema
+export const getSchemaPath = (): string => {
+    return path.join(os.homedir(), MODULES_PATH_NAME, MODULES_SCHEMA_PATH)
+}
+
+export const getSchemaConfigPath = (): string => {
+    return path.join(os.homedir(), MODULES_PATH_NAME, MODULES_SCHEMA_CONFIG_FILE_PATH)
+}
+
+// template
+export const getTemplatesPath = (): string => {
+    return path.join(os.homedir(), MODULES_PATH_NAME, MODULES_TEMPLATES_PATH)
 }

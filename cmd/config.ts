@@ -1,9 +1,5 @@
-import inquirer from 'inquirer'
-import {App} from '../src/app.js'
-import {appConfig, RunMode} from '../config/config.js'
-import {getModulesPath} from "../constants.js"
+import {cfg} from '../config/config.js'
 
 export const configCommand = () => {
-    const modulesPath = getModulesPath()
-    console.log(`modules path: ${modulesPath}`);
+    console.log(`modules path: ${cfg.modulesPath}`);
 }

@@ -14,7 +14,6 @@
   },
   "type": "module",
   "dependencies": {
-    "calceus": "./",
     "chalk": "^4.1.2",
     "commander": "^8.1.0",
     "conf": "^10.0.2",

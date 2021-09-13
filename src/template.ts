@@ -1,6 +1,6 @@
-import { getCalceusPath, getTemplateFilePath } from "../config/config.js";
 import { IO } from "./io.js";
 import path from 'path'
+import {cfg} from '../config/config.js'
 
 export type TemplateModel = {
     key: string,
@@ -11,21 +11,17 @@ export type TemplateModel = {
 
 export class Template {
     private name: string
-    private templatePath: string;
     private jsonCfg: Array<TemplateModel>
 
     constructor(name: string) {
         this.name = name
 
-        const calceusConfig = getCalceusPath()
-
-        if(!calceusConfig) {
-            throw new Error('undefinde calceus templates path')
-        }
-        this.templatePath = calceusConfig
-
         console.log('reading the template configuration...');
-        this.jsonCfg = IO.readJSONConfig<Array<TemplateModel>>(this.templatePath)
+        this.jsonCfg = IO.readJSONConfig<Array<TemplateModel>>(cfg.templatePath)
+    }
+
+    public static getTemlateFilePath = (rawTemplateFilePath: string): string => {
+        return path.join(cfg.templatePath, rawTemplateFilePath)
     }
 
     public getTemplateByKey = (): TemplateModel => {
@@ -39,7 +35,7 @@ export class Template {
             throw new Error(`template with key: ${this.name} was not found in schema`)
         }
 
-        const templatePath = getTemplateFilePath(template.path)
+        const templatePath = Template.getTemlateFilePath(template.path)
         const dirPath = IO.formRootDirPathFromFile(projectPath, template.name)
         
         IO.copyFile(templatePath, path.join(dirPath, template.name))

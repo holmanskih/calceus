@@ -1,6 +1,6 @@
 import { Schema } from './schema.js'
 import { Bootstraper } from './bootstraper.js'
-import { getSchemaPath } from '../config/config.js'
+import { cfg } from '../config/config.js'
 import { CliOpt } from '../cmd/build.js';
 import { getModulesPath } from '../constants.js';
 
@@ -12,15 +12,12 @@ export class App {
 
     // todo: change type !
     constructor(cliData: any) {
-        console.log('modules path23', getModulesPath());
-        
         this.dirPath = ''
         this.modules = ''
         this.projectName = ''
         this.parse(cliData)
 
-        const schemaPath = getSchemaPath()
-        const schema = new Schema(schemaPath)
+        const schema = new Schema(cfg.schemaConfigurationPath)
         if (!schema) {
             throw new Error('Project schema doesnt exists!')
         }
@@ -31,6 +28,8 @@ export class App {
         }
 
         this.bootstraper = new Bootstraper(this.dirPath, schemaModel, this.modules)
+        console.log('bootstraper', this.bootstraper);
+        
     }
 
     // todo: change type !

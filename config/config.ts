@@ -1,56 +1,38 @@
-import path from "path"
+import { getModulesPath, getSchemaConfigPath, getSchemaPath, getTemplatesPath } from "../constants.js"
+import fs from 'fs'
 
 export enum RunMode {
     Debug,
     Prod
 }
 
-type AppConfig = {
-    // calceus
-    calceusPath: string,
-    calceusConfigPath: string
+export type ConfigOpts = {
+    // directory path configuration
+    modulesPath: string
+    schemaPath: string,
+    templatePath: string,
+
+    // file path configuration
+    schemaConfigurationPath: string
 
     mode: RunMode,
-
-    //schema
-    schemaPath: string,
-
-    // templates
-    templatesPath: string,
 }
 
-export const appConfig: AppConfig = {
-    // calceus
-    calceusPath: ".calceus",
-    calceusConfigPath: "calceus.json",
-
-    // schema
-    schemaPath: "schema/schema.json",
-
-    // templates
-    templatesPath: "templates",
-
-    mode: RunMode.Prod, // debug or prod
+export const cfg: ConfigOpts = {
+    modulesPath: getModulesPath(),
+    schemaPath: getSchemaPath(),
+    schemaConfigurationPath: getSchemaConfigPath(),
+    templatePath: getTemplatesPath(),
+    mode: RunMode.Prod
 }
 
-// path utils
-export const getSchemaPath = (): string => {
-    return path.join(appConfig.calceusPath, appConfig.schemaPath)
-}
-
-export const getSchemaFilePath = (schemaFilePath: string): string => {
-    return path.join(appConfig.calceusPath, 'schema', schemaFilePath)
-
-}
-
-export const getTemplatesPath = (): string => {
-    return path.join(appConfig.calceusPath, appConfig.templatesPath)
-}
-
-export const getTemplateFilePath = (templateFilePath: string): string => {
-    return path.join(appConfig.calceusPath, templateFilePath)
-}
-
-export const getCalceusPath = (): string => {
-    return path.join(appConfig.calceusPath, appConfig.calceusConfigPath)
+export const validateConfig = (): boolean => {
+    console.log("validating configuration...");
+    console.log("modulesPath", cfg.modulesPath);
+    console.log("schemaPath", cfg.schemaPath);
+    console.log("templatePath", cfg.templatePath);
+    
+    return fs.existsSync(cfg.modulesPath) &&
+        fs.existsSync(cfg.schemaPath) && 
+        fs.existsSync(cfg.templatePath)
 }
