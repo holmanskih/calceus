@@ -2,7 +2,7 @@ import { Schema } from './schema.js'
 import { Bootstraper } from './bootstraper.js'
 import { getSchemaPath } from '../config/config.js'
 import { CliOpt } from '../cmd/build.js';
-import { Yarn } from './yarn.js';
+import { getModulesPath } from '../constants.js';
 
 export class App {
     private dirPath: string;
@@ -12,6 +12,8 @@ export class App {
 
     // todo: change type !
     constructor(cliData: any) {
+        console.log('modules path23', getModulesPath());
+        
         this.dirPath = ''
         this.modules = ''
         this.projectName = ''
