@@ -3,7 +3,7 @@ import { buildCommand } from './commands/build.js';
 import { Command } from 'commander';
 import { configCommand } from './commands/config.js';
 import { validateConfig } from '../../config.js';
-import {defaultBuildCommand} from "./commands/defaultBuild.js";
+import {buildAutoCommand} from "./commands/buildAuto.js";
 
 const program = new Command();
 
@@ -14,10 +14,10 @@ program
     .action(buildCommand);
 
 program
-    .command('default')
-    .alias('d')
+    .command('auto')
+    .alias('a')
     .description('bootstrap new project in auto mode')
-    .action(defaultBuildCommand);
+    .action(buildAutoCommand);
 
 program
     .command('config')

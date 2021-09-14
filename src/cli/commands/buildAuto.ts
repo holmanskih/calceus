@@ -1,27 +1,16 @@
 import inquirer from 'inquirer'
 import {cfg, RunMode} from '../../../config.js'
-import {CliOpts} from "../opts.js";
 import {Schema} from "../../schema.js";
 import {Bootstraper} from "../../bootstraper.js";
+import {CliOpts} from "../opts.js";
+import {CliOpt} from "./build.js";
 
-export enum CliOpt {
-    DirPath = "dirPath",
-    Modules = "modules",
-    ProjectName = "projectName"
-}
-
-const cliParams = [
-    {
-        type: 'input',
-        name: CliOpt.DirPath,
-        message: "Enter the new project path",
-        default: cfg.mode === RunMode.Debug ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
-    },
+export const cliParams = [
     {
         type: 'input',
         name: CliOpt.ProjectName,
         message: "Enter the new project name",
-        default: "example"
+        default: "."
     },
     {
         type: 'rawlist',
@@ -31,10 +20,11 @@ const cliParams = [
     },
 ]
 
-export const buildCommand = () => {
+export const buildAutoCommand = () => {
     inquirer
         .prompt<CliOpts>(cliParams)
         .then((cliOpts) => {
+            cliOpts.dirPath = process.cwd()
             const schemaModel = Schema.parseFromConfig(cfg.schemaConfigurationPath)
             const bootstrapper = new Bootstraper(cliOpts, schemaModel)
             bootstrapper.bootstrap()
