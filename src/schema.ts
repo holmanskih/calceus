@@ -1,5 +1,6 @@
-import fs from 'fs'
 import { IO } from './io.js'
+import path from "path";
+import {cfg} from "../config.js";
 
 export enum FileNodeType {
     File = "file",
@@ -16,21 +17,18 @@ export type SchemaModel = {
 }
 
 export class Schema {
-    private model: SchemaModel
-    private schemaPath: string
-
-    constructor(schemaPath: string) {
-        this.model = {
-            files: []
-        }
-        this.schemaPath = schemaPath
-    }
-
-    public parseFromConfig(): SchemaModel {
+    public static parseFromConfig(schemaConfigurationPath: string): SchemaModel {
         console.log('reading the schema configuration...');
-        const result = IO.readJSONConfig<SchemaModel>(this.schemaPath)
+        const result = IO.readJSONConfig<SchemaModel>(schemaConfigurationPath)
+        if(!result) {
+            throw new Error('Project schema model is undefined!')
+        }
         console.log('reading the schema configuration end...');
 
         return result
+    }
+
+    public static getSchemaFilePath = (rawSchemaFilePath: string): string => {
+        return path.join(cfg.schemaPath, rawSchemaFilePath)
     }
 }

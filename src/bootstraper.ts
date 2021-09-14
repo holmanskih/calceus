@@ -1,32 +1,20 @@
-import { FileNodeType, SchemaModel as Schema } from "./schema.js";
+import { FileNodeType, SchemaModel, Schema } from "./schema.js";
 import fs from 'fs'
 import { Template } from "./template.js";
 import { IO } from "./io.js";
 import { Yarn } from "./yarn.js";
-import { Modules } from "./modules.js";
+import {CliOpts} from "../cli/opts.js";
 
 export class Bootstraper {
-    private schema: Schema
+    private readonly projectPath: string
+    private schema: SchemaModel
     private template: Template
-    private projectPath: string
-    private configurationKey: string
 
-    constructor(projectPath: string, schema: Schema, configurationKey: string) {
+    constructor(cliOpts: CliOpts, schema: SchemaModel) {
         this.schema = schema
-        this.projectPath = projectPath
-        this.configurationKey = configurationKey
-        this.template = new Template(configurationKey)
-
-        // check if .calceus directory exists
-        // const isExists = this.isExists()
-        // if (!isExists) {
-        //     throw new Error('.calceus path is not correct, such directory doesnt exist')
-        // }
+        this.projectPath = cliOpts.dirPath
+        this.template = new Template(cliOpts.modules)
     }
-
-    // private isExists(): boolean {
-    //     return fs.existsSync(appConfig.calceusPath)
-    // }
 
     private createBaseDirNode(): void {
         IO.createDirRec(this.projectPath)
@@ -43,7 +31,7 @@ export class Bootstraper {
                     const dirPath = IO.formRootDirPathFromFile(this.projectPath, fileNode.path)
                     IO.createDirRec(dirPath)
 
-                    const schemaFilePath = Modules.getSchemaFilePath(fileNode.path)
+                    const schemaFilePath = Schema.getSchemaFilePath(fileNode.path)
                     IO.copyFile(schemaFilePath, dirPath)
                     break
                 }
@@ -60,8 +48,8 @@ export class Bootstraper {
     }
 
     public bootstrap() {
-        // this.createBaseDirNode()
-        // this.createFileNodesBySchema()
+        this.createBaseDirNode()
+        this.createFileNodesBySchema()
 
         // const pkgData = this.template.getTemplateByKey().modules
         // Yarn.start(this.projectPath, pkgData)

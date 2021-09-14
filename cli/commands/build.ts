@@ -1,6 +1,8 @@
 import inquirer from 'inquirer'
-import {App} from '../src/app.js'
-import {cfg, RunMode} from '../config/config.js'
+import {cfg, RunMode} from '../../config.js'
+import {CliOpts} from "../opts.js";
+import {Schema} from "../../src/schema.js";
+import {Bootstraper} from "../../src/bootstraper.js";
 
 export enum CliOpt {
     DirPath = "dirPath",
@@ -29,12 +31,13 @@ const modulesOptions = [
     },
 ]
 
-export const buildCmd = () => {
+export const buildCommand = () => {
     inquirer
-        .prompt(modulesOptions)
-        .then((answers) => {
-            let builder = new App(answers)
-            builder.bootstrap()
+        .prompt<CliOpts>(modulesOptions)
+        .then((cliOpts) => {
+            const schemaModel = Schema.parseFromConfig(cfg.schemaConfigurationPath)
+            const bootstrapper = new Bootstraper(cliOpts, schemaModel)
+            bootstrapper.bootstrap()
         })
         .catch((error) => {
             if (error.isTtyError) {

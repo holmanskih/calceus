@@ -1,4 +1,4 @@
-import { getModulesConfigFilePath, getModulesPath, getSchemaConfigPath, getSchemaPath, getTemplatesPath } from "../constants.js"
+import { getModulesConfigFilePath, getModulesPath, getSchemaConfigPath, getSchemaPath, getTemplatesPath } from "./constants.js"
 import fs from 'fs'
 
 export enum RunMode {
@@ -15,7 +15,6 @@ export type ConfigOpts = {
     // file path configuration
     schemaConfigurationPath: string
     modulesConfigurationPath: string
-    // templateConfigurationPath: string
 
     mode: RunMode,
 }
@@ -25,7 +24,6 @@ export const cfg: ConfigOpts = {
     schemaPath: getSchemaPath(),
     schemaConfigurationPath: getSchemaConfigPath(),
     modulesConfigurationPath: getModulesConfigFilePath(),
-    // templateConfigurationPath: getTemplatesConfigPath()
     templatePath: getTemplatesPath(),
     mode: RunMode.Prod
 }

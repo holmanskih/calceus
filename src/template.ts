@@ -1,6 +1,6 @@
 import { IO } from "./io.js";
 import path from 'path'
-import {cfg} from '../config/config.js'
+import {cfg} from '../config.js'
 
 export type TemplateModel = {
     key: string,
