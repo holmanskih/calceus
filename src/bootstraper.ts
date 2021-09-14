@@ -1,9 +1,9 @@
 import { FileNodeType, SchemaModel, Schema } from "./schema.js";
 import fs from 'fs'
 import { Template } from "./template.js";
-import { IO } from "./io.js";
+import { IO } from "./util/io.js";
 import { Yarn } from "./yarn.js";
-import {CliOpts} from "../cli/opts.js";
+import {CliOpts} from "./cli/opts.js";
 
 export class Bootstraper {
     private readonly projectPath: string

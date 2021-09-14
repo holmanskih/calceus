@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": false,
   "bin": {
-    "calceus": "./.dist/cli/index.js"
+    "calceus": "./.dist/bin/calceus.js"
   },
   "scripts": {
     "start": "tsc -w",

@@ -1,8 +1,8 @@
 import inquirer from 'inquirer'
-import {cfg, RunMode} from '../../config.js'
+import {cfg, RunMode} from '../../../config.js'
 import {CliOpts} from "../opts.js";
-import {Schema} from "../../src/schema.js";
-import {Bootstraper} from "../../src/bootstraper.js";
+import {Schema} from "../../schema.js";
+import {Bootstraper} from "../../bootstraper.js";
 
 export enum CliOpt {
     DirPath = "dirPath",

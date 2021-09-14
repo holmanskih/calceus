@@ -1,4 +1,4 @@
-import { IO } from './io.js'
+import { IO } from './util/io.js'
 import path from "path";
 import {cfg} from "../config.js";
 

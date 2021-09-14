@@ -1,5 +1,5 @@
 import shell from 'shelljs'
-import { IO } from './io.js'
+import { IO } from './util/io.js'
 
 export class Yarn {
     public static yarn(): void {
