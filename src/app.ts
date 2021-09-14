@@ -21,6 +21,8 @@ export class App {
         if (!schema) {
             throw new Error('Project schema doesnt exists!')
         }
+        console.log("init schema");
+        
 
         const schemaModel = schema.parseFromConfig()
         if(schemaModel == undefined) {

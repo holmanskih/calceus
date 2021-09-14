@@ -17,7 +17,8 @@ export class Template {
         this.name = name
 
         console.log('reading the template configuration...');
-        this.jsonCfg = IO.readJSONConfig<Array<TemplateModel>>(cfg.templatePath)
+        this.jsonCfg = IO.readJSONConfig<Array<TemplateModel>>(cfg.modulesConfigurationPath)
+        console.log('reading the template configuration end...');
     }
 
     public static getTemlateFilePath = (rawTemplateFilePath: string): string => {
