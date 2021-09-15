@@ -1,4 +1,3 @@
-#!/usr/cli/env node
 import { buildCommand } from './commands/build.js';
 import { Command } from 'commander';
 import { configCommand } from './commands/config.js';

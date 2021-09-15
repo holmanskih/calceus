@@ -32,7 +32,7 @@ export class IO {
 
     public static formRootDirPathFromFile(root: string, filePath: string): string {
         const nodePath = path.join(root, filePath)
-        const pathData = nodePath.split("/")
+        const pathData = nodePath.split(path.sep)
         const fileName = pathData[pathData.length - 1]
         const dirPath = nodePath.substring(0, nodePath.length - fileName.length - 1)
         return dirPath
