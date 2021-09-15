@@ -4,13 +4,15 @@ import {Schema} from "../../schema.js";
 import {Bootstraper} from "../../bootstraper.js";
 import {CliOpts} from "../opts.js";
 import {CliOpt} from "./build.js";
+import {CWD_PATH_DELIMITER} from "../../../constants";
+import path from "path";
 
 export const cliParams = [
     {
         type: 'input',
         name: CliOpt.ProjectName,
         message: "Enter the new project name",
-        default: "."
+        default: CWD_PATH_DELIMITER
     },
     {
         type: 'rawlist',
@@ -25,6 +27,11 @@ export const buildAutoCommand = () => {
         .prompt<CliOpts>(cliParams)
         .then((cliOpts) => {
             cliOpts.dirPath = process.cwd()
+            if(cliOpts.projectName == CWD_PATH_DELIMITER) {
+                cliOpts.projectName = ""
+            } else {
+                cliOpts.dirPath = path.join(cliOpts.dirPath, cliOpts.projectName)
+            }
             const schemaModel = Schema.parseFromConfig(cfg.schemaConfigurationPath)
             const bootstrapper = new Bootstraper(cliOpts, schemaModel)
             bootstrapper.bootstrap()

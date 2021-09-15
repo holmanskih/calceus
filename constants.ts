@@ -1,6 +1,8 @@
 import path from "path"
 import os from "os"
 
+export const CWD_PATH_DELIMITER = "."
+
 // directory path
 export const MODULES_PATH_NAME = ".calceus"
 export const MODULES_CONFIG_FILE_PATH = "calceus.json"
