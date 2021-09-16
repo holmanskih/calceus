@@ -6,11 +6,12 @@ export type TemplateModel = {
     key: string,
     path: string,
     name: string
-    modules: Array<string>
+    dependencies: Array<string>
+    devDependencies: Array<string>
 }
 
 export class Template {
-    private name: string
+    private readonly name: string
     private jsonCfg: Array<TemplateModel>
 
     constructor(name: string) {
@@ -32,7 +33,7 @@ export class Template {
     public moveToBootstrap = (projectPath: string) => {
         
         const template = this.getTemplateByKey()
-        if(template === undefined) {
+        if(!template) {
             throw new Error(`template with key: ${this.name} was not found in schema`)
         }
 

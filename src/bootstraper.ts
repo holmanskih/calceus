@@ -1,9 +1,9 @@
 import { FileNodeType, SchemaModel, Schema } from "./schema.js";
-import fs from 'fs'
 import { Template } from "./template.js";
 import { IO } from "./util/io.js";
 import { Yarn } from "./yarn.js";
 import {CliOpts} from "./cli/opts.js";
+import {TEMPLATE_KEY_DEPENDENCIES, TEMPLATE_KEY_DEV_DEPENDENCIES} from "../constants.js";
 
 export class Bootstraper {
     private readonly projectPath: string
@@ -51,7 +51,9 @@ export class Bootstraper {
         this.createBaseDirNode()
         this.createFileNodesBySchema()
 
-        // const pkgData = this.template.getTemplateByKey().modules
-        // Yarn.start(this.projectPath, pkgData)
+        const tmpl = this.template.getTemplateByKey()
+        const pkgData = tmpl[TEMPLATE_KEY_DEPENDENCIES]
+        const pkgDevelopmentData = tmpl[TEMPLATE_KEY_DEV_DEPENDENCIES]
+        Yarn.start(this.projectPath, pkgData, pkgDevelopmentData)
     }
 }

@@ -3,6 +3,10 @@ import os from "os"
 
 export const CWD_PATH_DELIMITER = "."
 
+// template key names
+export const TEMPLATE_KEY_DEPENDENCIES = "dependencies"
+export const TEMPLATE_KEY_DEV_DEPENDENCIES = "devDependencies"
+
 // directory path
 export const MODULES_PATH_NAME = ".calceus"
 export const MODULES_CONFIG_FILE_PATH = "calceus.json"

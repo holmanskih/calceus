@@ -4,7 +4,7 @@ import {Schema} from "../../schema.js";
 import {Bootstraper} from "../../bootstraper.js";
 import {CliOpts} from "../opts.js";
 import {CliOpt} from "./build.js";
-import {CWD_PATH_DELIMITER} from "../../../constants";
+import {CWD_PATH_DELIMITER} from "../../../constants.js";
 import path from "path";
 
 export const cliParams = [
@@ -18,7 +18,7 @@ export const cliParams = [
         type: 'rawlist',
         name: CliOpt.Modules,
         message: 'Choose project architecture to boostrap new project',
-        choices: ['react', 'vue'],
+        choices: ['default'],
     },
 ]
 

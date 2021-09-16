@@ -10,13 +10,22 @@ export class Yarn {
         shell.exec(`yarn add ${pkg}`)
     }
 
+    public static addDevelopment(pkg: string): void {
+        shell.exec(`yarn add -D ${pkg}`)
+    }
+
     public static addPkgList(pkgData: Array<string>): void {
         pkgData.forEach(pkg => Yarn.add(pkg))
     }
 
-    public static start(path: string, pkgData: Array<string>): void {
+    public static addDevelopmentPkgList(pkgDevelopmentData: Array<string>): void {
+        pkgDevelopmentData.forEach(pkg => Yarn.addDevelopment(pkg))
+    }
+
+    public static start(path: string, pkgData: Array<string>, pkgDevelopmentData: Array<string>): void {
         IO.navigate(path)
         this.yarn()
         this.addPkgList(pkgData)
+        this.addDevelopmentPkgList(pkgData)
     }
 }

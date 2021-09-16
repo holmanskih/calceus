@@ -27,7 +27,7 @@ const cliParams = [
         type: 'rawlist',
         name: CliOpt.Modules,
         message: 'Choose project architecture to boostrap new project',
-        choices: ['react', 'vue'],
+        choices: ['default'],
     },
 ]
 
