@@ -1,11 +1,11 @@
 {
   "name": "calceus",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "license": "MIT",
   "private": false,
   "bin": {
-    "calceus": "./.dist/bin/index.js"
+    "calceus": "./.dist/bin/calceus.js"
   },
   "scripts": {
     "start": "tsc -w",
@@ -14,18 +14,11 @@
   },
   "type": "module",
   "dependencies": {
-    "calceus": "./",
-    "chalk": "^4.1.2",
     "commander": "^8.1.0",
-    "conf": "^10.0.2",
     "fs": "^0.0.1-security",
-    "html-webpack-plugin": "^5.3.2",
     "inquirer": "^8.1.2",
     "path": "^0.12.7",
-    "quicktype": "^15.0.260",
-    "shelljs": "^0.8.4",
-    "webpack": "^5.51.1",
-    "webpack-merge": "^5.8.0"
+    "shelljs": "^0.8.4"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",

@@ -1,6 +1,8 @@
 import inquirer from 'inquirer'
-import {App} from '../src/app.js'
-import {appConfig, RunMode} from '../config/config.js'
+import {cfg, RunMode} from '../../../config.js'
+import {CliOpts} from "../opts.js";
+import {Schema} from "../../schema.js";
+import {Bootstraper} from "../../bootstraper.js";
 
 export enum CliOpt {
     DirPath = "dirPath",
@@ -8,12 +10,12 @@ export enum CliOpt {
     ProjectName = "projectName"
 }
 
-const modulesOptions = [
+const cliParams = [
     {
         type: 'input',
         name: CliOpt.DirPath,
         message: "Enter the new project path",
-        default: appConfig.mode == RunMode.Debug ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
+        default: cfg.mode === RunMode.Debug ? `./test_data/example_project_${new Date().valueOf()}` : "example_project"
     },
     {
         type: 'input',
@@ -25,16 +27,17 @@ const modulesOptions = [
         type: 'rawlist',
         name: CliOpt.Modules,
         message: 'Choose project architecture to boostrap new project',
-        choices: ['react', 'vue'],
+        choices: ['default'],
     },
 ]
 
-export const buildCmd = () => {
+export const buildCommand = () => {
     inquirer
-        .prompt(modulesOptions)
-        .then((answers) => {
-            let builder = new App(answers)
-            builder.bootstrap()
+        .prompt<CliOpts>(cliParams)
+        .then((cliOpts) => {
+            const schemaModel = Schema.parseFromConfig(cfg.schemaConfigurationPath)
+            const bootstrapper = new Bootstraper(cliOpts, schemaModel)
+            bootstrapper.bootstrap()
         })
         .catch((error) => {
             if (error.isTtyError) {

@@ -4,6 +4,8 @@ import shell from 'shelljs'
 
 export class IO {
     public static readJSONConfig<T>(path: string): T {
+        console.log('read json by path', path);
+        
         if (fs.existsSync(path)) {
 
             const data = fs.readFileSync(path, { encoding: 'utf-8', flag: 'r' })
@@ -30,7 +32,7 @@ export class IO {
 
     public static formRootDirPathFromFile(root: string, filePath: string): string {
         const nodePath = path.join(root, filePath)
-        const pathData = nodePath.split("/")
+        const pathData = nodePath.split(path.sep)
         const fileName = pathData[pathData.length - 1]
         const dirPath = nodePath.substring(0, nodePath.length - fileName.length - 1)
         return dirPath
